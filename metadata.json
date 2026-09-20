@@ -1,0 +1,6 @@
+{
+  "name": "Wanich Jewelry",
+  "description": "ผู้ผลิตและจำหน่ายเครื่องประดับเงินแท้ 925 เครื่องเงินน่านโบราณ กำไลโอนิกซ์ฝังทับทิมแท้ สร้อยข้อมือโซ่เงินตัน และบริการสั่งทำเครื่องประดับพิเศษ 3D CAD",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
