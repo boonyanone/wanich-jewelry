@@ -1,0 +1,48 @@
+{
+  "name": "Wanich Jewelry",
+  "nameTh": "วานิชจิวเวลรี่",
+  "company": "บริษัท ดีเอส วาณิช จำกัด (DS WANICH CO., LTD.)",
+  "tagline": "เครื่องเงินแท้ 925 และหัตถศิลป์เครื่องเงินน่านชั้นสูง",
+  "taglineEn": "Timeless Elegance, Masterfully Handcrafted Sterling Silver 925",
+  "experienceYears": 20,
+  "phoneNumbers": [
+    "088-260-4198",
+    "086-364-4281",
+    "081-697-7076"
+  ],
+  "lineId": "@wanich",
+  "lineUrl": "https://line.me/R/ti/p/@wanich",
+  "email": "wanichjewelry@gmail.com",
+  "facebook": "https://web.facebook.com/DSWanich",
+  "facebookName": "DSWanich / Wanich Jewelry",
+  "factoryAddress": "239 หมู่ 1 บ้านนาป่าน ต.สถาน อ.ปัว จ.น่าน 55120",
+  "retailBranches": [
+    {
+      "name": "โชว์รูมและโรงงานใหญ่ อ.ปัว จ.น่าน",
+      "address": "239 หมู่ที่ 1 บ้านนาป่าน ต.สถาน อ.ปัว จ.น่าน 55120",
+      "hours": "เปิดทุกวัน 08:30 - 17:30 น.",
+      "tel": "088-260-4198",
+      "lat": 19.1741667,
+      "lng": 100.914478
+    },
+    {
+      "name": "เคาน์เตอร์ เซ็นทรัล ชิดลม (Central Chidlom)",
+      "address": "ชั้น 7 แผนกสินค้าหัตถกรรมไทย เซ็นทรัล ชิดลม กรุงเทพฯ",
+      "hours": "เปิดทุกวัน 10:00 - 21:00 น.",
+      "tel": "086-364-4281"
+    },
+    {
+      "name": "เคาน์เตอร์ เซ็นทรัล ภูเก็ต (Central Phuket)",
+      "address": "เซ็นทรัล ภูเก็ต ฟลอเรสต้า แผนกเครื่องประดับและหัตถศิลป์",
+      "hours": "เปิดทุกวัน 10:30 - 21:30 น.",
+      "tel": "088-260-4198"
+    }
+  ],
+  "silverPriceDefault": {
+    "buyPricePerKg": 32500,
+    "sellPricePerKg": 34800,
+    "pureSilverPct": 99.9,
+    "standardSilverPct": 92.5,
+    "updatedAt": "อัปเดตล่าสุดวันนี้"
+  }
+}

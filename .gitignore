@@ -1,0 +1,39 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Next.js build output
+/.next/
+/out/
+
+# Production build artifacts
+build
+dist
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env*.local
+.env
+
+# System files
+.DS_Store
+*.pem
+
+# IMPORTANT: Ignore Heavy WordPress Backup Folders and Files
+/backup wp/
+/backup wp
+*.wpress
+wanichsilver/
+*.sql
+*.tar.gz
+*.zip
+
+# IDE & Editor
+.vscode/
+.idea/
