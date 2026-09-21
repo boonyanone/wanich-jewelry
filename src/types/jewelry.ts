@@ -18,6 +18,11 @@ export interface Product {
   weightGrams?: number;
 }
 
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
 export interface ProductCategory {
   id: string;
   name: string;

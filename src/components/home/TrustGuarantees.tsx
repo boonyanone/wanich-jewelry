@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, Sparkles, RefreshCw, Truck, Award, Gem } from "lucide-react";
+import { ShieldCheck, RefreshCw, Truck, Award } from "lucide-react";
 
 export default function TrustGuarantees() {
   const guarantees = [
@@ -26,7 +26,7 @@ export default function TrustGuarantees() {
   ];
 
   return (
-    <section className="py-16 bg-[#FAF8F5]">
+    <section className="py-20 bg-[#0B0B0D] border-t border-white/10 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {guarantees.map((item, idx) => {
@@ -34,15 +34,15 @@ export default function TrustGuarantees() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-6 border border-zinc-200/80 hover:border-[#C5A059]/50 shadow-2xs hover:shadow-md transition-all text-center sm:text-left space-y-3"
+                className="bg-[#121217] rounded-2xl p-6 border border-white/10 hover:border-[#C5A059]/60 shadow-lg transition-all text-center sm:text-left space-y-3"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#FAF8F5] border border-[#C5A059]/30 flex items-center justify-center text-[#C5A059] mx-auto sm:mx-0">
+                <div className="w-11 h-11 rounded-xl bg-white/5 border border-[#C5A059]/30 flex items-center justify-center text-[#E5C378] mx-auto sm:mx-0">
                   <IconComp className="w-5 h-5" />
                 </div>
-                <h3 className="font-heading-th text-sm font-bold text-[#18181B]">
+                <h3 className="font-heading-th text-sm font-semibold text-white">
                   {item.title}
                 </h3>
-                <p className="text-xs text-[#71717A] leading-relaxed">
+                <p className="text-xs text-zinc-400 leading-relaxed font-light">
                   {item.desc}
                 </p>
               </div>

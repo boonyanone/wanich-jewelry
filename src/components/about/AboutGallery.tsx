@@ -30,40 +30,40 @@ export default function AboutGallery() {
     <div className="space-y-12">
       {/* 2-Photo Showcase Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-md border border-[#C5A059]/30 bg-zinc-100">
+        <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-xl border border-[#C5A059]/30 bg-[#14141A]">
           <Image
             src="/images/heritage/heritage-shop.jpg"
             alt="โชว์รูมและโรงงานวานิชจิวเวลรี่"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute bottom-4 left-4 text-white">
-            <p className="font-heading-th text-xs font-semibold">โชว์รูมใหญ่และโรงงาน ณ อ.ปัว จ.น่าน</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute bottom-5 left-5 text-white">
+            <p className="font-heading-th text-xs font-medium text-zinc-200">โชว์รูมใหญ่และโรงงาน ณ อ.ปัว จ.น่าน</p>
           </div>
         </div>
 
-        <div className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-md border border-[#C5A059]/30 bg-zinc-100">
+        <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-xl border border-[#C5A059]/30 bg-[#14141A]">
           <Image
             src="/images/heritage/heritage-laser.jpg"
             alt="เครื่องจักรเลเซอร์และหล่อเครื่องเงิน"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute bottom-4 left-4 text-white">
-            <p className="font-heading-th text-xs font-semibold">เครื่องจักรเลเซอร์ความแม่นยำสูงมาตรฐานสากล</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute bottom-5 left-5 text-white">
+            <p className="font-heading-th text-xs font-medium text-zinc-200">เครื่องจักรเลเซอร์ความแม่นยำสูงมาตรฐานสากล</p>
           </div>
         </div>
       </div>
 
       {/* 4 Pillars */}
-      <div className="bg-white rounded-2xl p-8 sm:p-12 border border-zinc-200/80 shadow-xs space-y-8">
+      <div className="bg-[#121217] rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl space-y-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <h3 className="font-serif-luxury text-2xl sm:text-3xl font-bold text-[#18181B]">
+          <h3 className="font-serif-luxury text-2xl sm:text-3xl font-light text-white">
             หัวใจหลักแห่งคุณภาพของ Wanich Jewelry
           </h3>
-          <p className="text-xs text-[#71717A]">
+          <p className="text-xs text-zinc-400 font-light">
             4 เสาหลักที่ทำให้ผลงานของเราได้รับความไว้วางใจจากลูกค้าทั้งในประเทศและต่างประเทศ
           </p>
         </div>
@@ -72,12 +72,12 @@ export default function AboutGallery() {
           {pillars.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="p-5 rounded-xl bg-[#FAF8F5] border border-zinc-200/80 space-y-2">
-                <div className="w-9 h-9 rounded-lg bg-white border border-[#C5A059]/30 flex items-center justify-center text-[#C5A059]">
+              <div key={idx} className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-white/10 border border-[#C5A059]/30 flex items-center justify-center text-[#E5C378]">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h4 className="font-heading-th text-sm font-bold text-[#18181B]">{item.title}</h4>
-                <p className="text-[#71717A] leading-relaxed">{item.desc}</p>
+                <h4 className="font-heading-th text-sm font-semibold text-white">{item.title}</h4>
+                <p className="text-zinc-400 leading-relaxed font-light">{item.desc}</p>
               </div>
             );
           })}

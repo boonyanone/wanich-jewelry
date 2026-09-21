@@ -1,5 +1,5 @@
 import React from "react";
-import { Sparkles, Layers, Cpu, Hammer, CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export default function BespokeSteps() {
   const steps = [
@@ -27,35 +27,35 @@ export default function BespokeSteps() {
 
   return (
     <div className="space-y-8">
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-zinc-200/80 shadow-xs space-y-6">
-        <h2 className="font-serif-luxury text-2xl font-bold text-[#18181B] flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-[#C5A059]" />
+      <div className="bg-[#121217] rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl space-y-6">
+        <h2 className="font-serif-luxury text-2xl font-light text-white flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-[#E5C378]" />
           <span>ขั้นตอนการสั่งทำพิเศษ 4 ขั้นตอน</span>
         </h2>
 
         <div className="space-y-6">
           {steps.map((s) => (
             <div key={s.num} className="flex gap-4 items-start">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#C5A059]/40 flex items-center justify-center font-serif-luxury font-bold text-[#B8934A] shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-white/5 border border-[#C5A059]/40 flex items-center justify-center font-serif-luxury font-bold text-[#E5C378] shrink-0">
                 {s.num}
               </div>
               <div>
-                <h3 className="font-heading-th text-sm font-bold text-[#18181B]">{s.title}</h3>
-                <p className="text-xs text-[#71717A] mt-1">{s.desc}</p>
+                <h3 className="font-heading-th text-sm font-semibold text-white">{s.title}</h3>
+                <p className="text-xs text-zinc-400 mt-1 font-light leading-relaxed">{s.desc}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="bg-[#18181B] text-white rounded-2xl p-6 sm:p-8 border border-[#C5A059]/40 space-y-3">
-        <span className="text-[10px] uppercase tracking-wider text-[#D4AF37] font-semibold">
-          Factory & Machinery Standards
+      <div className="bg-[#16161E] text-white rounded-3xl p-6 sm:p-8 border border-[#C5A059]/40 space-y-3 shadow-2xl">
+        <span className="text-[10px] uppercase tracking-wider text-[#E5C378] font-mono">
+          FACTORY & MACHINERY STANDARDS
         </span>
-        <h3 className="font-serif-luxury text-xl font-bold">
+        <h3 className="font-serif-luxury text-xl font-light">
           เครื่องจักรทันสมัย มาตรฐานส่งออกสากล
         </h3>
-        <p className="text-xs text-zinc-300 leading-relaxed">
+        <p className="text-xs text-zinc-400 leading-relaxed font-light">
           โรงงานวานิชจิวเวลรี่พร้อมด้วยเครื่องจักรเลเซอร์ (Laser Machine), เครื่องฉีดเทียน (Wax Injection) และเตาหลอมสุญญากาศมาตรฐานส่งออก รองรับทั้งงานสั่งทำชิ้นเดียวและงาน OEM
         </p>
       </div>

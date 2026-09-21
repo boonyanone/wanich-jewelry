@@ -115,9 +115,9 @@ export default function AdminPage() {
   );
 
   return (
-    <div className="pt-28 pb-20 bg-[#FAF8F5] min-h-screen">
+    <div className="pt-28 pb-20 bg-[#0B0B0D] min-h-screen text-white">
       {notification && (
-        <div className="fixed top-24 right-6 z-50 px-4 py-3 rounded-xl bg-[#18181B] text-white text-xs flex items-center gap-2 shadow-2xl border border-[#C5A059]">
+        <div className="fixed top-24 right-6 z-50 px-4 py-3 rounded-xl bg-[#14141C] text-white text-xs flex items-center gap-2 shadow-2xl border border-[#C5A059]">
           <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
           <span>{notification}</span>
         </div>
@@ -126,23 +126,27 @@ export default function AdminPage() {
       <AdminHeader />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex gap-2 border-b border-zinc-200 pb-3">
+        <div className="flex gap-2 border-b border-white/10 pb-3">
           <button
             onClick={() => setActiveTab("products")}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 ${
-              activeTab === "products" ? "bg-[#18181B] text-white" : "bg-white text-zinc-600 border"
+            className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
+              activeTab === "products"
+                ? "bg-gradient-to-r from-[#F3E5AB] via-[#E5C378] to-[#C5A059] text-[#0B0B0D]"
+                : "bg-white/5 text-zinc-400 hover:text-white border border-white/10"
             }`}
           >
-            <Package className="w-4 h-4 text-[#C5A059]" />
+            <Package className="w-4 h-4" />
             <span>จัดการสินค้า ({products.length})</span>
           </button>
           <button
             onClick={() => setActiveTab("silver")}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 ${
-              activeTab === "silver" ? "bg-[#18181B] text-white" : "bg-white text-zinc-600 border"
+            className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
+              activeTab === "silver"
+                ? "bg-gradient-to-r from-[#F3E5AB] via-[#E5C378] to-[#C5A059] text-[#0B0B0D]"
+                : "bg-white/5 text-zinc-400 hover:text-white border border-white/10"
             }`}
           >
-            <TrendingUp className="w-4 h-4 text-[#C5A059]" />
+            <TrendingUp className="w-4 h-4" />
             <span>อัปเดตราคากระดานเงินสด</span>
           </button>
         </div>
