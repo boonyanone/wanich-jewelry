@@ -63,3 +63,10 @@ This configuration file defines the persistent operating standards, cognitive wo
   1. TypeScript type checking
   2. Production compilation build
 - In case of build or lint errors, diagnose the root cause and self-correct systematically.
+
+---
+
+## 8. Headless FlowBuilder Architecture (มาตรฐานโปรเจคใหม่)
+- **Decoupled Backend**: สำหรับโปรเจคใหม่ ให้ถือว่า Next.js (Frontend) ทำงานแบบ Headless โดยดึงข้อมูลผ่าน API จาก **FlowBuilder** (ระบบหลังบ้านกลาง) เป็นหลัก
+- **Replace Local JSON**: ห้ามใช้การอ่าน/เขียนไฟล์ JSON ตรงๆ (`fs.readFileSync` / `writeFileSync`) สำหรับ Data หลักของ Business Logic ในโปรเจคสเกลใหญ่ ให้สร้าง `services/api.ts` เพื่อคุยกับ FlowBuilder API แทน
+- **Theme-able UI**: การตั้งค่าสีและ Design Tokens ต้องผูกกับ CSS Variables ใน `globals.css` เพื่อให้รองรับการเปลี่ยนธีมสำหรับลูกค้าหลายโปรเจคได้อย่างรวดเร็ว
