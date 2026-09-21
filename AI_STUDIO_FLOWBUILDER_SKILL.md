@@ -1,38 +1,158 @@
-# FlowBuilder Headless Next.js Project Skill (AI Studio)
+# FlowBuilder Headless Next.js Project Skill (AI Studio & Antigravity Standard)
 
-## Overview
-This skill defines the standard operating procedures for developing new frontend web projects based on the `pratharn` / `wanich-jewelry` architectural standard. The core architecture uses Next.js (App Router), React 19, Tailwind CSS v4, and connects to **FlowBuilder** as a Headless CMS Backend.
+## 1. Overview & Architectural Vision
+This skill defines the unified standard operating procedure for developing new frontend web applications across AI Studio and Antigravity. The frontend functions strictly as a **Headless Presentation Layer** powered by Next.js 15+ (App Router), React 19, and Tailwind CSS v4, fetching content and dynamic business data directly from **FlowBuilder** (Centralized Headless CMS & Workflow Backend).
 
-## Core Stack
+---
+
+## 2. Core Tech Stack & Standards
 - **Frontend Framework**: Next.js 15+ (App Router)
-- **Styling**: Tailwind CSS v4 (using CSS Variables in `globals.css` for easy theme switching)
-- **Language**: TypeScript (Strict typing for all component props and API responses)
-- **Backend/Data Source**: FlowBuilder (Headless CMS fetching via REST/GraphQL API)
+- **Runtime & Styling**: React 19 + Tailwind CSS v4 (Theme-able via CSS Variables in `globals.css`)
+- **Type Safety**: Strict TypeScript (`no implicit any`, explicit interfaces in `src/types/`)
+- **Backend & Data Source**: FlowBuilder Headless API (REST / GraphQL)
+- **Component File Limits**:
+  - Pages (`src/app/**/page.tsx`): **< 80 lines** (Orchestrators only)
+  - UI Components (`src/components/**`): **< 120-150 lines** (Single-responsibility subcomponents)
 
-## Architecture Guidelines (The "Wanich" Standard)
+---
 
-### 1. Separation of Concerns (Modular Components)
-- **Pages as Orchestrators**: Page files (`app/**/page.tsx`) must be clean, containing LESS than 80 lines of code. They should only fetch data and compose sub-components.
-- **Isolated UI Components**: Place all complex UI elements into `src/components/`. 
-  - Keep component files under 150 lines. If larger, split into sub-components.
-  - Component styling should rely on Tailwind classes and responsive utility classes.
+## 3. Standard Environment Variables
+Every project adhering to the FlowBuilder standard must declare these keys in `.env.example`:
 
-### 2. State & Context Management
-- Use React Context (e.g., `CartContext`) for global states like shopping carts or user sessions.
-- Keep contexts lightweight and separate from UI logic.
+```env
+# FlowBuilder Headless Backend Configuration
+FLOWBUILDER_BASE_URL=https://api.flowbuilder.io/v1
+FLOWBUILDER_API_KEY=
+FLOWBUILDER_PROJECT_ID=
+FLOWBUILDER_REVALIDATE_SECRET=
+```
 
-### 3. Data Integration (FlowBuilder Headless Approach)
-- Do NOT use local JSON files (`fs.writeFileSync`) for production data in new projects.
-- **Service Layer**: Create API fetchers in `src/services/api.ts` to communicate with the FlowBuilder Backend.
-- **Data Contracts**: Always define TypeScript interfaces (`src/types/*.ts`) mapping to the JSON structures provided by FlowBuilder before building the UI.
+---
 
-### 4. UI/UX Quality (Dark/Light Mode Ready)
-- Ensure all components support CSS variables defined in `globals.css` to allow rapid rebranding (e.g., swapping from a dark luxury theme to a bright minimal theme).
-- Maintain WCAG AA contrast and mobile-first responsiveness (touch targets >= 44px).
+## 4. Service Layer: Fallback & Mock Adapter Pattern (`src/services/api.ts`)
+To ensure the AI Studio and preview containers **never crash or show blank screens** when API keys are not yet configured or during backend downtime, all FlowBuilder calls must use the **Graceful Fallback & Mock Adapter**:
 
-## Instructions for AI Agents
-When initializing a new project or building new features using this skill:
-1. **Analyze Requirements**: Understand what FlowBuilder API endpoints will be provided.
-2. **Define Types**: Write the TypeScript interfaces first.
-3. **Build Components**: Create isolated Tailwind UI components using mock data if API is not yet ready.
-4. **Wire Up Data**: Assemble the components in the Next.js `page.tsx` and integrate the `fetch()` calls to FlowBuilder.
+```typescript
+// src/services/api.ts
+import { headers } from "next/headers";
+
+const BASE_URL = process.env.FLOWBUILDER_BASE_URL || "";
+const API_KEY = process.env.FLOWBUILDER_API_KEY || "";
+const PROJECT_ID = process.env.FLOWBUILDER_PROJECT_ID || "";
+
+export interface FetchOptions {
+  endpoint: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE";
+  body?: any;
+  revalidate?: number | false;
+  tags?: string[];
+  fallbackData?: any;
+}
+
+export async function fetchFlowBuilder<T>({
+  endpoint,
+  method = "GET",
+  body,
+  revalidate = 60, // Default 60 seconds ISR
+  tags,
+  fallbackData,
+}: FetchOptions): Promise<T> {
+  // 1. Fallback if credentials are missing
+  if (!BASE_URL || !API_KEY) {
+    if (fallbackData !== undefined) {
+      console.warn(`[FlowBuilder API] Missing credentials for ${endpoint}, using fallback data.`);
+      return fallbackData as T;
+    }
+  }
+
+  try {
+    const res = await fetch(`${BASE_URL}/${endpoint}`, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${API_KEY}`,
+        "X-Project-Id": PROJECT_ID,
+      },
+      body: body ? JSON.stringify(body) : undefined,
+      next: {
+        revalidate: typeof revalidate === "number" ? revalidate : undefined,
+        tags,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`FlowBuilder Error [${res.status}]: ${res.statusText}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error(`[FlowBuilder API Failure] Failed fetching ${endpoint}:`, error);
+    if (fallbackData !== undefined) return fallbackData as T;
+    throw error;
+  }
+}
+```
+
+---
+
+## 5. Next.js Caching & On-Demand Revalidation (`src/app/api/revalidate/route.ts`)
+FlowBuilder triggers a webhook to purge and refresh pages immediately when editors publish changes:
+
+```typescript
+// src/app/api/revalidate/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath, revalidateTag } from "next/cache";
+
+export async function POST(req: NextRequest) {
+  const secret = req.nextUrl.searchParams.get("secret");
+  if (secret !== process.env.FLOWBUILDER_REVALIDATE_SECRET) {
+    return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+  }
+
+  const { path, tag } = await req.json().catch(() => ({}));
+  if (tag) revalidateTag(tag);
+  if (path) revalidatePath(path);
+
+  return NextResponse.json({ revalidated: true, now: Date.now() });
+}
+```
+
+---
+
+## 6. Theme-able Token Architecture (`globals.css`)
+Design tokens must map directly to CSS variables to support multi-client rebranding without altering component code:
+
+```css
+@import "tailwindcss";
+
+:root {
+  --color-canvas: #0B0B0D;
+  --color-surface: #121217;
+  --color-surface-hover: #181822;
+  --color-primary: #C5A059;
+  --color-primary-hover: #E5C378;
+  --color-text-primary: #F4F4F5;
+  --color-text-secondary: #A1A1AA;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-accent: rgba(197, 160, 89, 0.4);
+}
+```
+
+---
+
+## 7. Step-by-Step AI Implementation Protocol for New Projects
+When an agent is requested to build a new project or page under this skill:
+
+1. **Contract First (`src/types/`)**:
+   - Define exact TypeScript data interfaces representing FlowBuilder collections before writing any UI.
+2. **Setup Service Layer (`src/services/api.ts`)**:
+   - Implement `fetchFlowBuilder` with mock fallback presets so UI is fully reviewable in the browser instantly.
+3. **Build Sub-components (`src/components/`)**:
+   - Write pure, isolated components under 120-150 lines.
+   - Use CSS variables or theme classes for all colors and borders.
+4. **Assemble Page Orchestrators (`src/app/**/page.tsx`)**:
+   - Fetch data in the server component.
+   - Pass typed props down to sub-components. Keep page file under 80 lines.
+5. **Self-Verification**:
+   - Run `lint_applet` and `compile_applet`.
+   - Ensure zero build errors and verified mobile responsiveness.

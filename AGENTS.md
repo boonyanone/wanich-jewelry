@@ -66,7 +66,10 @@ This configuration file defines the persistent operating standards, cognitive wo
 
 ---
 
-## 8. Headless FlowBuilder Architecture (มาตรฐานโปรเจคใหม่)
-- **Decoupled Backend**: สำหรับโปรเจคใหม่ ให้ถือว่า Next.js (Frontend) ทำงานแบบ Headless โดยดึงข้อมูลผ่าน API จาก **FlowBuilder** (ระบบหลังบ้านกลาง) เป็นหลัก
-- **Replace Local JSON**: ห้ามใช้การอ่าน/เขียนไฟล์ JSON ตรงๆ (`fs.readFileSync` / `writeFileSync`) สำหรับ Data หลักของ Business Logic ในโปรเจคสเกลใหญ่ ให้สร้าง `services/api.ts` เพื่อคุยกับ FlowBuilder API แทน
-- **Theme-able UI**: การตั้งค่าสีและ Design Tokens ต้องผูกกับ CSS Variables ใน `globals.css` เพื่อให้รองรับการเปลี่ยนธีมสำหรับลูกค้าหลายโปรเจคได้อย่างรวดเร็ว
+## 8. Headless FlowBuilder Architecture (มาตรฐานโปรเจคใหม่ระดับสากล)
+- **Unified Skill Standard**: สำหรับการพัฒนาโปรเจกต์ใหม่ทุกโปรเจกต์ Agent **ต้องอ่านและยึดถือมาตรฐานใน `AI_STUDIO_FLOWBUILDER_SKILL.md` เป็นหลักเสมอ**
+- **Decoupled Backend**: Next.js (Frontend) ทำงานแบบ Headless ดึงข้อมูลและจัดการสถานะผ่าน API จาก **FlowBuilder** (ระบบหลังบ้านกลาง) เท่านั้น
+- **Replace Local JSON with Service Layer**: ห้ามใช้การอ่าน/เขียนไฟล์ JSON ตรงๆ (`fs.readFileSync` / `writeFileSync`) สำหรับ Data หลักของ Business Logic ให้สร้าง `src/services/api.ts` โดยใช้ **Fallback & Mock Adapter Pattern** เพื่อให้หน้าเว็บพรีวิวใน AI Studio ทำงานได้ลื่นไหล ไม่พังแม้ยังไม่มี API Key
+- **On-Demand Revalidation & ISR**: กำหนดค่าการแคชด้วย Next.js ISR (`next: { revalidate: 60 }`) และรองรับ Webhook ใน `src/app/api/revalidate/route.ts` เพื่ออัปเดตข้อมูลจาก FlowBuilder ได้ทันที
+- **Standard Environment Variables**: ทุกโปรเจกต์ต้องประกาศตัวแปรกลางใน `.env.example` ให้ตรงกัน (`FLOWBUILDER_BASE_URL`, `FLOWBUILDER_API_KEY`, `FLOWBUILDER_PROJECT_ID`)
+- **Theme-able UI**: การตั้งค่าสีและ Design Tokens ต้องผูกกับ CSS Variables ใน `globals.css` เพื่อให้รองรับการเปลี่ยนธีมสำหรับลูกค้าหลายโปรเจคได้อย่างรวดเร็วโดยไม่ต้องแก้โค้ด Component
