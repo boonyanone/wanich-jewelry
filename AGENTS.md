@@ -72,4 +72,4 @@ This configuration file defines the persistent operating standards, cognitive wo
 - **Replace Local JSON with Service Layer**: ห้ามใช้การอ่าน/เขียนไฟล์ JSON ตรงๆ (`fs.readFileSync` / `writeFileSync`) สำหรับ Data หลักของ Business Logic ให้สร้าง `src/services/api.ts` โดยใช้ **Fallback & Mock Adapter Pattern** เพื่อให้หน้าเว็บพรีวิวใน AI Studio ทำงานได้ลื่นไหล ไม่พังแม้ยังไม่มี API Key
 - **On-Demand Revalidation & ISR**: กำหนดค่าการแคชด้วย Next.js ISR (`next: { revalidate: 60 }`) และรองรับ Webhook ใน `src/app/api/revalidate/route.ts` เพื่ออัปเดตข้อมูลจาก FlowBuilder ได้ทันที
 - **Standard Environment Variables**: ทุกโปรเจกต์ต้องประกาศตัวแปรกลางใน `.env.example` ให้ตรงกัน (`FLOWBUILDER_BASE_URL`, `FLOWBUILDER_API_KEY`, `FLOWBUILDER_PROJECT_ID`)
-- **Theme-able UI**: การตั้งค่าสีและ Design Tokens ต้องผูกกับ CSS Variables ใน `globals.css` เพื่อให้รองรับการเปลี่ยนธีมสำหรับลูกค้าหลายโปรเจคได้อย่างรวดเร็วโดยไม่ต้องแก้โค้ด Component
+- **Easy-to-Edit Codebase**: โครงสร้างโฟลเดอร์และ Component ต้องเน้นความเรียบง่าย (Clean & Modular) เพื่อให้ง่ายต่อการแก้ไขและนำไปใช้ซ้ำในโปรเจกต์อื่นๆ โดยไม่ยึดติดกับ Design หรือ Theme ของโปรเจกต์ใดโปรเจกต์หนึ่ง

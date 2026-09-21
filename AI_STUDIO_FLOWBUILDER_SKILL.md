@@ -7,7 +7,7 @@ This skill defines the unified standard operating procedure for developing new f
 
 ## 2. Core Tech Stack & Standards
 - **Frontend Framework**: Next.js 15+ (App Router)
-- **Runtime & Styling**: React 19 + Tailwind CSS v4 (Theme-able via CSS Variables in `globals.css`)
+- **Runtime & Styling**: React 19 + Tailwind CSS v4
 - **Type Safety**: Strict TypeScript (`no implicit any`, explicit interfaces in `src/types/`)
 - **Backend & Data Source**: FlowBuilder Headless API (REST / GraphQL)
 - **Component File Limits**:
@@ -119,28 +119,7 @@ export async function POST(req: NextRequest) {
 
 ---
 
-## 6. Theme-able Token Architecture (`globals.css`)
-Design tokens must map directly to CSS variables to support multi-client rebranding without altering component code:
-
-```css
-@import "tailwindcss";
-
-:root {
-  --color-canvas: #0B0B0D;
-  --color-surface: #121217;
-  --color-surface-hover: #181822;
-  --color-primary: #C5A059;
-  --color-primary-hover: #E5C378;
-  --color-text-primary: #F4F4F5;
-  --color-text-secondary: #A1A1AA;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-accent: rgba(197, 160, 89, 0.4);
-}
-```
-
----
-
-## 7. Step-by-Step AI Implementation Protocol for New Projects
+## 6. Step-by-Step AI Implementation Protocol for New Projects
 When an agent is requested to build a new project or page under this skill:
 
 1. **Contract First (`src/types/`)**:
@@ -149,7 +128,7 @@ When an agent is requested to build a new project or page under this skill:
    - Implement `fetchFlowBuilder` with mock fallback presets so UI is fully reviewable in the browser instantly.
 3. **Build Sub-components (`src/components/`)**:
    - Write pure, isolated components under 120-150 lines.
-   - Use CSS variables or theme classes for all colors and borders.
+   - Keep styling straightforward and independent of any specific brand design.
 4. **Assemble Page Orchestrators (`src/app/**/page.tsx`)**:
    - Fetch data in the server component.
    - Pass typed props down to sub-components. Keep page file under 80 lines.
